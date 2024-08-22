@@ -433,7 +433,7 @@ RedmineWysiwygEditor.prototype._initTinymce = function(setting) {
       'formatselect | bold italic underline strikethrough code removeformat | link image codesample wiki attachment | bullist numlist blockquote | hr | table | undo redo | fullscreen';
 
   var autocompleteSetting = self._autocomplete ? {
-    delimiter: ['#', '@'],
+    delimiter: ['#'],
     source: function(query, process, delimiter) {
       if (query.length === 0) return [];
 
