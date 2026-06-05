@@ -15,19 +15,28 @@
       var singleChild = preNode.childNodes.length === 1 && preNode.firstChild;
       var codeNode = singleChild && singleChild.nodeName === 'CODE'
         && singleChild.className ? singleChild : preNode;
+
       if (!codeNode.className) {
         return null;
       }
+
       return CODE_CLASS_PATTERNS.reduce(function (match, regexp) {
         return match || (codeNode.className.match(regexp) || [null, null])[1];
       }, null);
     }
 
     editor.on('SetContent', function () {
-      $('pre').filter(function (index, node) {
+      var editorBody = editor.getBody();
+
+      if (!editorBody) {
+        return;
+      }
+
+      $('pre', editorBody).filter(function (index, node) {
         return !!codeBlockLanguage(node);
       }).each(function (index, node) {
         var language = codeBlockLanguage(node);
+
         replaceBrWithNl(node);
         node.innerHTML = editor.dom.encode(node.textContent);
         node.className = "language-" + language;
